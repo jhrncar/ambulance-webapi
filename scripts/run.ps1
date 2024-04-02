@@ -21,7 +21,7 @@ switch ($command) {
     "openapi" {
         docker run --rm -ti -v ${ProjectRoot}:/local openapitools/openapi-generator-cli generate -c /local/scripts/generator-cfg.yaml
     }
-        "start" {
+    "start" {
                     try {
             mongo up --detach
             go run ${ProjectRoot}/cmd/ambulance-api-service
@@ -29,12 +29,15 @@ switch ($command) {
             mongo down
         }
         }
-            "test" {
+    "test" {
         go test -v ./...
     }
-        "mongo" {
-    mongo up
+    "mongo" {
+        mongo up
     }
+    "docker" {
+        docker build -t jhrncar/ambulance-wl-webapi:local-build -f ${ProjectRoot}/build/docker/Dockerfile .
+   }
     default {
         throw "Unknown command: $command"
     }
